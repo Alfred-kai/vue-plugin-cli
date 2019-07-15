@@ -1,0 +1,21 @@
+{
+  "name": "vue-plugin-cli",
+  "version": "1.0.0",
+  "private": false,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2"
+  },
+  "devDependencies": {
+    "commander": "^2.20.0",
+    "inquirer": "^6.5.0",
+    "mkdirp": "^0.5.1"
+  }
+}
