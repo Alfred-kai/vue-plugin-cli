@@ -1,3 +1,4 @@
+const Utils = require("./utils");
 const pkg = require("./package.json");
 const program = require("commander");
 const fsExt = require("fs-extra");
@@ -46,7 +47,8 @@ function readFileList(path, filesList) {
 
 function handleFiles(path, fullPath, name) {
   fs.readFile(fullPath, "utf8", function(err, files) {
-    var result = files.replace(/@BASE_URL/g, "wangkai");
+    var result1 = files.replace(/@COMP_NAME/g, Utils.getComponentName(name));
+    var result = result1.replace(/@NAME/g, name);
 
     var idx = path.indexOf("@@_");
     var pathPostFix = path.substring(idx + 3);
