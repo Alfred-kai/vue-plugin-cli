@@ -30,14 +30,24 @@ const handleFiles = (path, fullPath, name) => {
     const path2 = workingDir + "/" + name + pathPostFix;
     const fullPath2 = workingDir + "/" + name + fullPathPostFix;
 
-    if (!fs.existsSync(path2)) {
-      fs.mkdirSync(path2);
-    }
+    createNoExitFolder(path2);
 
-    fs.appendFile(fullPath2, result, "utf8", function(err) {
+    fs.appendFileSync(fullPath2, result, "utf8", function(err) {
       if (err) return console.log(err);
     });
   });
+};
+
+const createNoExitFolder = path => {
+  if (!fs.existsSync(path)) {
+    try {
+      fs.mkdirSync(path);
+    } catch {
+      const index = path.lastIndexOf("/", path.length - 2);
+      const upDir = path.slice(0, index);
+      createNoExitFolder(upDir);
+    }
+  }
 };
 
 module.exports = {
