@@ -19,22 +19,22 @@ const readFileList = (path, filesList) => {
 };
 
 const handleFiles = (path, fullPath, name) => {
-  fs.readFile(fullPath, "utf8", (err, files) => {
-    const result1 = files.replace(/@COMP_NAME/g, Utils.getComponentName(name));
-    const result = result1.replace(/@NAME/g, name);
+  const content = fs.readFileSync(fullPath, "utf8");
 
-    const idx = path.indexOf("@@_");
-    const pathPostFix = path.substring(idx + 3);
-    const fullPathPostFix = fullPath.substring(idx + 3);
+  const result1 = content.replace(/@COMP_NAME/g, Utils.getComponentName(name));
+  const result = result1.replace(/@NAME/g, name);
 
-    const path2 = workingDir + "/" + name + pathPostFix;
-    const fullPath2 = workingDir + "/" + name + fullPathPostFix;
+  const idx = path.indexOf("@@_");
+  const pathPostFix = path.substring(idx + 3);
+  const fullPathPostFix = fullPath.substring(idx + 3);
 
-    createNoExitFolder(path2);
+  const path2 = workingDir + "/" + name + pathPostFix;
+  const fullPath2 = workingDir + "/" + name + fullPathPostFix;
 
-    fs.appendFileSync(fullPath2, result, "utf8", function(err) {
-      if (err) return console.log(err);
-    });
+  createNoExitFolder(path2);
+
+  fs.appendFileSync(fullPath2, result, "utf8", function(err) {
+    if (err) return console.log(err);
   });
 };
 
@@ -42,7 +42,7 @@ const createNoExitFolder = path => {
   if (!fs.existsSync(path)) {
     try {
       fs.mkdirSync(path);
-    } catch {
+    } catch (err) {
       const index = path.lastIndexOf("/", path.length - 2);
       const upDir = path.slice(0, index);
       createNoExitFolder(upDir);
